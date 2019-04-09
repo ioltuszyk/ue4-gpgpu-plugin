@@ -2,8 +2,6 @@
 
 #include "CoreMinimal.h"
 
-#include "KernelContainer.h"
-#include "UObject/ObjectMacros.h"
 #include "GPGPUComponent.generated.h"
 
 UCLASS(ClassGroup = "GPGPU", DisplayName = "GPGPU Component", HideCategories = (Tags), meta = (BlueprintSpawnableComponent))
