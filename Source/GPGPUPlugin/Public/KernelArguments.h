@@ -23,13 +23,14 @@
 
 #include "KernelArguments.generated.h"
 
-typedef boost::variant<int> kernelArg;
-
 UCLASS()
 class UKernelArguments : public UObject {
 	GENERATED_BODY()
-
+    
 public:
+    UFUNCTION(BlueprintCallable, Category = "Kernel Functions")
+    void LogArguments();
+
+    std::vector<boost::variant<double, long long, std::vector<boost::variant<double, long long>>>> Arguments;
 private:
-    std::vector<kernelArg> m_Arguments;
 };
