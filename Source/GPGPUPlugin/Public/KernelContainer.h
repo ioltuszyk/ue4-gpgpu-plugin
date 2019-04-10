@@ -12,7 +12,7 @@ namespace EKernelContainer {
 	};
 }
 
-UCLASS(Blueprintable)
+UCLASS(BlueprintType)
 class UKernelContainer : public UObject {
 	GENERATED_BODY()
 

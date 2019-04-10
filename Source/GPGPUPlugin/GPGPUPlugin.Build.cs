@@ -12,6 +12,7 @@ public class GPGPUPlugin : ModuleRules
 
 	public GPGPUPlugin(ReadOnlyTargetRules Target) : base(Target)
 	{
+		bEnableUndefinedIdentifierWarnings = false;
 		PCHUsage = ModuleRules.PCHUsageMode.UseExplicitOrSharedPCHs;
 		
 		PublicIncludePaths.AddRange(
@@ -64,6 +65,19 @@ public class GPGPUPlugin : ModuleRules
 		string NvidiaLibrariesPath = Path.Combine(OpenCLLibrariesPath, "NVIDIA", PlatformString);
 		string IntelLibrariesPath = Path.Combine(OpenCLLibrariesPath, "Intel", PlatformString);
 		string AmdLibrariesPath = Path.Combine(OpenCLLibrariesPath, "AMD", PlatformString);
+		string BoostLibrariesPath = Path.Combine(OpenCLLibrariesPath, "Boost");
+		if (Target.Platform == UnrealTargetPlatform.Win64) {
+			string[] BoostLibs = Directory.GetFiles(BoostLibrariesPath, "*x64*.lib", SearchOption.AllDirectories);
+			foreach (string boostLib in BoostLibs) {
+				PublicAdditionalLibraries.Add(boostLib);
+			}
+		}
+		else if (Target.Platform == UnrealTargetPlatform.Win32) {
+			string[] BoostLibs = Directory.GetFiles(BoostLibrariesPath, "*x32*.lib", SearchOption.AllDirectories);
+			foreach (string boostLib in BoostLibs) {
+				PublicAdditionalLibraries.Add(boostLib);
+			}
+		}
 		if (Target.Platform == UnrealTargetPlatform.Win64 || Target.Platform == UnrealTargetPlatform.Win32)
 		{
 			PublicAdditionalLibraries.Add(Path.Combine(NvidiaLibrariesPath, "OpenCL.lib"));
