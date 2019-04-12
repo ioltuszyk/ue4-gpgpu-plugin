@@ -1,14 +1,7 @@
 #include "KernelArguments.h"
 
-UKernelArguments* UKernelArguments::CreateKernelArguments(UObject* WorldContextObject) {
-    UWorld* World = GEngine->GetWorldFromContextObject(WorldContextObject);
-	UKernelArguments* tempObject = NewObject<UKernelArguments>();
-
-	return tempObject;
-}
-
-void UKernelArguments::ParseKernelArgumentsFromStructure(UProperty* kernelArgumentStructure, UKernelArguments* kernelArgs) {
-    check(0);
+UKernelArguments* UKernelArguments::ParseKernelArgumentsFromStructure(UProperty* kernelArgumentStructureIn) {
+    return NULL;
 }
 
 boost::variant<double, long long> UKernelArguments::SubParseProperty(UProperty* Property, void* ValuePtr) {
@@ -26,17 +19,17 @@ boost::variant<double, long long> UKernelArguments::SubParseProperty(UProperty* 
     return (double)0.0f;
 }
 
-void UKernelArguments::ParseProperty(UProperty* Property, void* ValuePtr, UKernelArguments* kernelArgs)
+void UKernelArguments::ParseProperty(FString variableName, UProperty* Property, void* ValuePtr, UKernelArguments* kernelArgs)
 {        
     if (UNumericProperty *NumericProperty = Cast<UNumericProperty>(Property))
     {
         if (NumericProperty->IsFloatingPoint())
         {
-            kernelArgs->Arguments.push_back(NumericProperty->GetFloatingPointPropertyValue(ValuePtr));
+            kernelArgs->Arguments.push_back(std::make_pair(variableName, NumericProperty->GetFloatingPointPropertyValue(ValuePtr)));
         }
         else if (NumericProperty->IsInteger())
         {
-            kernelArgs->Arguments.push_back(NumericProperty->GetSignedIntPropertyValue(ValuePtr));
+            kernelArgs->Arguments.push_back(std::make_pair(variableName, NumericProperty->GetSignedIntPropertyValue(ValuePtr)));
         }
     }
     if (UArrayProperty* ArrayProperty = Cast<UArrayProperty>(Property))
@@ -48,7 +41,7 @@ void UKernelArguments::ParseProperty(UProperty* Property, void* ValuePtr, UKerne
         {    
             subArguments.push_back(SubParseProperty(ArrayProperty->Inner, Helper.GetRawPtr(i)));
         }
-        kernelArgs->Arguments.push_back(subArguments);
+        kernelArgs->Arguments.push_back(std::make_pair(variableName, subArguments));
     }
 }
 
@@ -61,7 +54,7 @@ void UKernelArguments::IterateThroughStructProperty(UStructProperty* StructPrope
         for (int32 ArrayIndex = 0; ArrayIndex < Property->ArrayDim; ArrayIndex++)
         {
             void* ValuePtr = Property->ContainerPtrToValuePtr<void>(StructPtr, ArrayIndex);
-            ParseProperty(Property, ValuePtr, kernelArgs);
+            ParseProperty(VariableName, Property, ValuePtr, kernelArgs);
         }
     }
 }
