@@ -14,6 +14,13 @@ Installation
   * [AMD](https://www.amd.com/en/support)
 2. Copy or move the 'Plugins' folder into your project's root directory.
 
+Limitations
+----------------------
+
+1. Run-time compilation of CUDA modules is performed using [NVRTC](https://docs.nvidia.com/cuda/nvrtc/index.html), which requires a 64-bit system configuration on the Windows platform.
+2. Does not allow for specification of device to execute kernel on (select the first one available for a given GPGPU framework)
+3. Requires that header-only libraries be written inline in the module code contained in the kernel asset.
+
 Usage
 ----------------------
 
