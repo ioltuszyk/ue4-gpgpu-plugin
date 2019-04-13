@@ -83,10 +83,20 @@ public class GPGPUPlugin : ModuleRules
 			PublicAdditionalLibraries.Add(Path.Combine(NvidiaLibrariesPath, "OpenCL.lib"));
 			PublicAdditionalLibraries.Add(Path.Combine(IntelLibrariesPath, "OpenCL.lib"));
 			PublicAdditionalLibraries.Add(Path.Combine(AmdLibrariesPath, "OpenCL.lib"));
+
+			PublicAdditionalLibraries.Add(Path.Combine(NvidiaLibrariesPath, "cuda.lib"));
+			PublicAdditionalLibraries.Add(Path.Combine(NvidiaLibrariesPath, "cudadevrt.lib"));
+			PublicAdditionalLibraries.Add(Path.Combine(NvidiaLibrariesPath, "cudart.lib"));
+			PublicAdditionalLibraries.Add(Path.Combine(NvidiaLibrariesPath, "cudart_static.lib"));
+			PublicAdditionalLibraries.Add(Path.Combine(NvidiaLibrariesPath, "nvcuvid.lib"));
 		}
 		else if (Target.Platform == UnrealTargetPlatform.Mac)
 		{
 			PublicAdditionalFrameworks.Add(new UEBuildFramework("OpenCL"));
+		}
+		if (Target.Platform == UnrealTargetPlatform.Win64)
+		{
+			PublicAdditionalLibraries.Add(Path.Combine(NvidiaLibrariesPath, "nvrtc.lib"));
 		}
 	}
 }

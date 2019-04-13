@@ -20,7 +20,7 @@ public:
 	UPROPERTY(EditAnywhere, BlueprintReadOnly, Category = "Kernel Parameters")
 	TEnumAsByte<EKernelContainer::KernelType> KernelType;
 
-    UPROPERTY(EditAnywhere, BlueprintReadOnly, Category = "Kernel Parameters")
+    UPROPERTY(EditAnywhere, BlueprintReadOnly, Category = "Kernel Parameters", meta = (MultiLine = "true"))
     FText KernelCode;
 protected:
 private:

@@ -13,6 +13,9 @@
 
 // include third-party headers with object names that conflict with UE4's macros
 #include "boost/variant.hpp"
+#include "cuda.h"
+#include "nvrtc.h"
+#include "builtin_types.h"
 
 #pragma pop_macro("PI")
 #pragma pop_macro("check")
@@ -22,6 +25,7 @@
 #include <vector>
 #include <algorithm>
 
+#include "KernelContainer.h"
 #include "KernelArguments.h"
 
 #include "GPGPUComponent.generated.h"
